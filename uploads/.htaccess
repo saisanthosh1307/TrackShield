@@ -1,0 +1,23 @@
+# Uploaded evidence: serve images only, never execute scripts.
+Options -Indexes -ExecCGI
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .php8 .phps .cgi .pl .py
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .php8 .phps
+
+# Deny every file that is not a jpg/jpeg/png/gif/webp image
+<FilesMatch "^(?!.*\.(?i:jpe?g|png|gif|webp)$).*$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set Content-Security-Policy "default-src 'none'; img-src 'self'"
+</IfModule>

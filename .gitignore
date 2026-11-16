@@ -1,0 +1,5 @@
+uploads/emergencies/*
+!uploads/emergencies/.gitkeep
+.vscode/
+.DS_Store
+*.log
